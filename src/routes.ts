@@ -9,7 +9,7 @@ const media = new Media(envConfig);
 router.post('/upload', async (req, res) => {
     try {
         const statusData: UploadUrlOptions = req.body;
-        const newStatus = await media.uploadStreamFromUrl(statusData);
+        const newStatus = await media.uploadStreamFromUrl(envConfig, statusData);
         res.status(201).json(newStatus);
     } catch (error: any) {
         res.status(500).json({ message: error.message });

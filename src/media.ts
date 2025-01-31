@@ -29,7 +29,7 @@ export class Media {
         this.bucketName = envConfig.AWS_BUCKET_NAME;
     }
 
-    public async uploadStreamFromUrl(options: UploadUrlOptions): Promise<string> {
+    public async uploadStreamFromUrl(envConfig: EnvironmentConfig, options: UploadUrlOptions): Promise<string> {
 
         const { sourceUrl, destinationDir, sourceType } = options;
         const response = await fetch(sourceUrl);
@@ -55,7 +55,7 @@ export class Media {
         const contentType = response.headers.get("content-type") || "";
         const contentLength = Number(response.headers.get("content-length")) || 0;
 
-        if (process.env.DEPLOYMENT_ENV === "prod") {
+        if (envConfig.ENV === "prod") {
             const upload = new Upload({
                 client: this.s3Client,
                 params: {
